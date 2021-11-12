@@ -32,26 +32,10 @@ h1,
 #result{
     font-size: 40px;
     font-weight: bold;
-    margin-bottom: 20px;
 }
 
 .randomizer-block{
     margin-bottom: 20px;
-}
-
-input[type="number"],
-.button{
-    width: 200px;
-    padding: 0 10px;
-    line-height: 40px;
-    border: 2px solid black;
-    border-radius: 10px;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .button{
@@ -59,4 +43,47 @@ input::-webkit-inner-spin-button {
     line-height: 60px;
     margin: 0 auto 20px auto;
     background-color: lightskyblue;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.range-block{
+    width: 100%;
+}
+
+.range-bar{
+    position: relative;
+    height: 8px;
+    width: 100%;
+    background-color: #efefef;
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+}
+
+.range-pointer-low,
+.range-pointer-high{
+    position: absolute;
+    top: -5px;;
+    width: 16px;
+    height: 16px;
+    background-color: #0075ff;
+    border-radius: 50%;
+}
+
+.range-line{
+    width: 100%;
+    height: 100%;
+    background-color: #0075ff;
+    border-radius: 5px;
+}
+
+.range-pointer-high{
+    right: -2px;
+}
+
+.range-minMax-block{
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    color: #696969;
 }
