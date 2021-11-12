@@ -39,7 +39,7 @@ randomize();
 //===============================================================
 
 let leftPosition = 0;
-let rightPosition = rangeBar.offsetWidth - 13;
+let rightPosition = rangeBar.offsetWidth - 5;
 
 function pointerMove(currentEvent, currentPointer) {
     currentEvent.preventDefault();
@@ -55,7 +55,7 @@ function pointerMove(currentEvent, currentPointer) {
 
         if (currentPointer.classList.contains('range-pointer-low')) {
             if (newLeft > rightPosition) {
-                newLeft = rightPosition - 13;
+                newLeft = rightPosition - 5;
             } else if (newLeft < 0) {
                 newLeft = 0;
             } else if (newLeft > rightEdge) {
@@ -63,7 +63,7 @@ function pointerMove(currentEvent, currentPointer) {
             }
         } else if (currentPointer.classList.contains('range-pointer-high')) {
             if (newLeft < leftPosition) {
-                newLeft = leftPosition + 13;
+                newLeft = leftPosition + 5;
             } else if (newLeft < 0) {
                 newLeft = 0;
             } else if (newLeft > rightEdge) {
