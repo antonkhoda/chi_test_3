@@ -36,66 +36,68 @@ randomize();
 
 let leftPosition = 0;
 let rightPosition = rangeBar.offsetWidth - 15;
+let currentPointer;
+let shiftX;
 let isMouseFlag = false;
 
 function pointerMove(currentEvent) {
-  let currentPointer = currentEvent.target;
-  let shiftX =
+  currentPointer = currentEvent.target;
+  shiftX =
     currentEvent.clientX - currentEvent.target.getBoundingClientRect().left;
 
   if (isMouseFlag) {
     document.addEventListener("mousemove", onMouseMove)
   };
+}
 
-  function onMouseMove(currentEvent) {
-    let newLeft = currentEvent.clientX - shiftX - rangeBar.getBoundingClientRect().left;
-    let rightEdge = rangeBar.offsetWidth - currentPointer.offsetWidth;
+function onMouseMove(currentEvent) {
+  let newLeft = currentEvent.clientX - shiftX - rangeBar.getBoundingClientRect().left;
+  let rightEdge = rangeBar.offsetWidth - currentPointer.offsetWidth;
 
-    if (currentPointer.dataset.pointer == "low") {
-      if (newLeft > rightPosition) {
-        newLeft = rightPosition - 5;
-      }
-      if (newLeft < 0) {
-        newLeft = 0;
-      }
+  if (currentPointer.dataset.pointer == "low") {
+    if (newLeft > rightPosition) {
+      newLeft = rightPosition - 5;
     }
-
-    if (currentPointer.dataset.pointer == "high") {
-      if (newLeft < leftPosition) {
-        newLeft = leftPosition + 5;
-      }
-      if (newLeft > rightEdge) {
-        newLeft = rightEdge;
-      }
+    if (newLeft < 0) {
+      newLeft = 0;
     }
-
-    currentPointer.style.left = newLeft + "px";
-    let positionInPersent = Math.round(
-      (newLeft * 103) / currentPointer.parentNode.offsetWidth
-    );
-    currentPointer.setAttribute("data-location", positionInPersent);
-    let positionInPx = +rangeMin.innerHTML +
-      Math.round(
-        ((rangeMax.innerHTML - rangeMin.innerHTML) / 100) * positionInPersent
-      );
-
-    if (currentPointer.dataset.pointer == "low") {
-      rangeCurrentMin.innerHTML = positionInPx;
-      leftPosition = newLeft;
-      currentPointer.parentElement.style.paddingLeft = newLeft + "px";
-    }
-
-    if (currentPointer.dataset.pointer == "high") {
-      rangeCurrentMax.innerHTML = positionInPx;
-      rightPosition = newLeft;
-      currentPointer.parentElement.style.paddingRight =
-        currentPointer.parentElement.offsetWidth - 10 - newLeft + "px";
-    }
-
-    if (!isMouseFlag) {
-      document.removeEventListener("mousemove", onMouseMove)
-    };
   }
+
+  if (currentPointer.dataset.pointer == "high") {
+    if (newLeft < leftPosition) {
+      newLeft = leftPosition + 5;
+    }
+    if (newLeft > rightEdge) {
+      newLeft = rightEdge;
+    }
+  }
+
+  currentPointer.style.left = newLeft + "px";
+  let positionInPersent = Math.round(
+    (newLeft * 103) / currentPointer.parentNode.offsetWidth
+  );
+  currentPointer.setAttribute("data-location", positionInPersent);
+  let positionInPx = +rangeMin.innerHTML +
+    Math.round(
+      ((rangeMax.innerHTML - rangeMin.innerHTML) / 100) * positionInPersent
+    );
+
+  if (currentPointer.dataset.pointer == "low") {
+    rangeCurrentMin.innerHTML = positionInPx;
+    leftPosition = newLeft;
+    currentPointer.parentElement.style.paddingLeft = newLeft + "px";
+  }
+
+  if (currentPointer.dataset.pointer == "high") {
+    rangeCurrentMax.innerHTML = positionInPx;
+    rightPosition = newLeft;
+    currentPointer.parentElement.style.paddingRight =
+      currentPointer.parentElement.offsetWidth - 10 - newLeft + "px";
+  }
+
+  if (!isMouseFlag) {
+    document.removeEventListener("mousemove", onMouseMove)
+  };
 }
 
 rangePointerLow.addEventListener("mousedown", (event) => {
