@@ -1,5 +1,7 @@
 const resultBlock = document.querySelector(".js-result");
 const sliderValueBlock = document.querySelector(".js-slider-value");
+const rangePointerLow = document.querySelector('.js-range-pointer-low');
+const rangePointerHigh = document.querySelector('.js-range-pointer-high');
 const rangeMin = document.querySelector(".js-range-min");
 const rangeMax = document.querySelector(".js-range-max");
 const rangeCurrentMin = document.querySelector(".js-current-range-min");
@@ -34,18 +36,19 @@ randomize();
 
 let leftPosition = 0;
 let rightPosition = rangeBar.offsetWidth - 15;
-let mouseFlag = false;
+let isMouseFlag = false;
 
 function pointerMove(currentEvent) {
   let currentPointer = currentEvent.target;
   let shiftX =
     currentEvent.clientX - currentEvent.target.getBoundingClientRect().left;
 
-  if (mouseFlag) document.addEventListener("mousemove", onMouseMove);
+  if (isMouseFlag) {
+    document.addEventListener("mousemove", onMouseMove)
+  };
 
   function onMouseMove(currentEvent) {
-    let newLeft =
-      currentEvent.clientX - shiftX - rangeBar.getBoundingClientRect().left;
+    let newLeft = currentEvent.clientX - shiftX - rangeBar.getBoundingClientRect().left;
     let rightEdge = rangeBar.offsetWidth - currentPointer.offsetWidth;
 
     if (currentPointer.dataset.pointer == "low") {
@@ -71,8 +74,7 @@ function pointerMove(currentEvent) {
       (newLeft * 103) / currentPointer.parentNode.offsetWidth
     );
     currentPointer.setAttribute("data-location", positionInPersent);
-    let positionInPx =
-      +rangeMin.innerHTML +
+    let positionInPx = +rangeMin.innerHTML +
       Math.round(
         ((rangeMax.innerHTML - rangeMin.innerHTML) / 100) * positionInPersent
       );
@@ -90,15 +92,22 @@ function pointerMove(currentEvent) {
         currentPointer.parentElement.offsetWidth - 10 - newLeft + "px";
     }
 
-    if (!mouseFlag) document.removeEventListener("mousemove", onMouseMove);
+    if (!isMouseFlag) {
+      document.removeEventListener("mousemove", onMouseMove)
+    };
   }
 }
 
-document.addEventListener("mousedown", (event) => {
-  mouseFlag = true;
+rangePointerLow.addEventListener("mousedown", (event) => {
+  isMouseFlag = true;
+  pointerMove(event);
+});
+
+rangePointerHigh.addEventListener("mousedown", (event) => {
+  isMouseFlag = true;
   pointerMove(event);
 });
 
 document.addEventListener("mouseup", () => {
-  mouseFlag = false;
+  isMouseFlag = false;
 });
